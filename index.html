@@ -144,7 +144,13 @@
   <!-- Modal -->
   <div x-show="selected" x-cloak class="fixed inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-50">
     <div class="bg-white rounded-2xl shadow-xl w-full max-w-xl mx-2 hospital-modal relative overflow-y-auto max-h-[95vh]">
-      <button @click="selected=null" class="absolute top-2 right-2 text-gray-400 hover:text-teal-600 text-xl">&times;</button>
+    <button 
+  @click="selected=null"
+  class="absolute top-2 right-2 text-gray-400 hover:text-white bg-gray-300 hover:bg-teal-600 rounded-full shadow-md text-3xl p-2 transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-teal-400"
+  aria-label="Close"
+>
+  &times;
+</button>
       <div class="p-6">
         <div class="flex items-center gap-4 mb-4">
           <div>
