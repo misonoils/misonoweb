@@ -11,16 +11,18 @@
 <body class="bg-gray-50" x-data="hospitalApp()" x-init="init()">
   <!-- Header -->
   <header class="bg-white shadow sticky top-0 z-20">
-    <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col gap-2 sm:flex-row sm:gap-4 sm:items-center">
-      <div class="flex items-center gap-3 flex-1">
-        <a href="index.html" class="flex items-center gap-3 flex-1 cursor-pointer">
-  <img src="logo.png" alt="Logo" class="w-14 h-14 rounded-full bg-gray-100 object-cover border border-gray-300 shadow">
-  <div>
-    <div class="text-2xl font-extrabold text-teal-800 tracking-tight drop-shadow">Misono International Language School</div>
-    <div class="text-sm text-gray-500 font-medium">Kakamigahara, Gifu</div>
-  </div>
-</a>
-      </div>
+  <div class="max-w-5xl mx-auto px-2 sm:px-4 py-3 flex flex-col gap-1 sm:flex-row sm:gap-4 sm:items-center">
+    <div class="flex items-center gap-2 sm:gap-3 flex-1">
+      <a href="index.html" class="flex items-center gap-2 sm:gap-3 flex-1 cursor-pointer">
+        <img src="logo.png" alt="Logo" class="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-gray-100 object-cover border border-gray-300 shadow">
+        <div class="overflow-hidden">
+          <div class="font-extrabold text-teal-800 tracking-tight drop-shadow text-lg sm:text-2xl whitespace-nowrap truncate">
+  Misono International Language School
+</div>
+          <div class="text-xs sm:text-sm text-gray-500 font-medium">Kakamigahara, Gifu</div>
+        </div>
+      </a>
+    </div>
       <div class="flex items-center mt-2 sm:mt-0 gap-2">
         <span class="text-lg font-semibold text-teal-700 hidden sm:block" x-text="t('Hospital Directory')"></span>
         <button @click="toggleLang()" class="ml-4 bg-gradient-to-r from-teal-600 to-teal-400 text-white px-4 py-1.5 rounded-xl font-semibold shadow hover:from-teal-700 hover:to-teal-500 transition text-base">EN/日本語</button>
