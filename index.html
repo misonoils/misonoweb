@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kakamigahara Hospital Directory / 各務原市病院案内</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50" x-data="hospitalApp()" x-init="init()">
+  <!-- Header -->
+  <header class="bg-white shadow sticky top-0 z-20">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col gap-2 sm:flex-row sm:gap-4 sm:items-center">
+      <div class="flex items-center gap-3 flex-1">
+        <a href="index.html" class="flex items-center gap-3 flex-1 cursor-pointer">
+  <img src="logo.png" alt="Logo" class="w-14 h-14 rounded-full bg-gray-100 object-cover border border-gray-300 shadow">
+  <div>
+    <div class="text-2xl font-extrabold text-teal-800 tracking-tight drop-shadow">Misono International Language School</div>
+    <div class="text-sm text-gray-500 font-medium">Kakamigahara, Gifu</div>
+  </div>
+</a>
+      </div>
+      <div class="flex items-center mt-2 sm:mt-0 gap-2">
+        <span class="text-lg font-semibold text-teal-700 hidden sm:block" x-text="t('Hospital Directory')"></span>
+        <button @click="toggleLang()" class="ml-4 bg-gradient-to-r from-teal-600 to-teal-400 text-white px-4 py-1.5 rounded-xl font-semibold shadow hover:from-teal-700 hover:to-teal-500 transition text-base">EN/日本語</button>
+      </div>
+    </div>
+    <div class="w-full border-b"></div>
+  </header>
+
+  <main class="max-w-5xl mx-auto p-2 sm:p-4 flex flex-col md:flex-row gap-4 md:gap-6 mt-2 md:mt-6">
+
+    <!-- Sidebar - always visible and fixed on mobile -->
+    <aside class="w-full md:w-1/4 space-y-6">
+      <section class="bg-white rounded-2xl shadow-lg p-4 mb-2 md:mb-0">
+        <h2 class="text-lg font-bold mb-2 flex items-center">
+          <span x-text="t('Specialties')"></span>
+        </h2>
+        <div style="max-height:340px;overflow-y:auto;">
+          <ul class="flex flex-wrap gap-2 md:block">
+            <!-- Main Specialties -->
+            <template x-for="cat in specialtiesMain">
+              <li class="w-auto md:w-full">
+                <button @click="filter.specialty = cat; page=1; applyFilters()" class="block w-full text-left px-2 py-1 rounded hover:bg-teal-50"
+                  :class="filter.specialty === cat ? 'bg-teal-100 font-bold' : ''">
+                  <span x-text="getSpecialtyLabel(cat, lang)"></span>
+                </button>
+              </li>
+            </template>
+            <!-- Others: now just a direct button, not dropdown -->
+            <li class="w-auto md:w-full">
+              <button
+                @click="filter.specialty = '_others'; page=1; applyFilters()"
+                class="block w-full text-left px-2 py-1 rounded hover:bg-teal-50 font-medium"
+                :class="filter.specialty === '_others' ? 'bg-teal-100 font-bold' : ''"
+                x-text="lang==='ja' ? 'その他' : 'Others'"></button>
+            </li>
+            <!-- All Specialties -->
+            <li>
+              <button @click="filter.specialty = ''; page=1; applyFilters()" class="block w-full text-left px-2 py-1 rounded hover:bg-teal-50"
+                :class="filter.specialty === '' ? 'bg-teal-100 font-bold' : ''">
+                <span x-text="t('All')"></span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="bg-white rounded-2xl shadow-lg p-4">
+        <h2 class="text-lg font-bold mb-2" x-text="t('Search & Filter')"></h2>
+        <input type="text" class="w-full mb-2 px-3 py-2 border rounded focus:ring-2 focus:ring-teal-300"
+          x-model="filter.search" @input="applyFilters()" :placeholder="t('Search...')" />
+        <label class="block mb-2 font-medium"><input type="checkbox" x-model="filter.openNow" @change="applyFilters()" /> <span x-text="t('Open Now')"></span></label>
+        <span x-show="!isOpen(hosp)" class="bg-red-100 text-red-800 px-2 rounded" x-text="t('Close Now')"></span>
+        <label class="block mb-2 font-medium"><input type="checkbox" x-model="filter.insurance" @change="applyFilters()" /> <span x-text="t('Accepts Insurance')"></span></label>
+        <label class="block mb-2 font-medium"><input type="checkbox" x-model="filter.language" @change="applyFilters()" /> <span x-text="t('Language Support (English)')"></span></label>
+      </section>
+    </aside>
+
+    <!-- Main Content -->
+    <section class="flex-1 space-y-6">
+      <!-- Google Maps Iframe (no API key) -->
+      <div class="bg-white rounded-2xl shadow-lg p-2 mb-2">
+        <div class="flex justify-between items-center px-2 pb-2">
+          <h2 class="text-lg font-bold" x-text="t('Map')"></h2>
+          <button @click="findNearby()" class="text-teal-700 font-medium hover:underline" x-text="t('Find Nearby Hospitals')"></button>
+        </div>
+        <div class="rounded-2xl border border-gray-200 overflow-hidden" style="width: 100%; height: 250px;">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d146047.85373331912!2d136.79577235990425!3d35.41910101435086!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1z55eF6Zmi!5e1!3m2!1sen!2sjp!4v1751868937945!5m2!1sen!2sjp"
+            width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-lg">
+        <div class="px-4 py-3 border-b flex justify-between items-center">
+          <h2 class="text-lg font-bold" x-text="t('Hospitals')"></h2>
+          <span x-text="filteredHospitals.length + ' ' + t('results')"></span>
+        </div>
+        <ul>
+          <template x-for="hosp in pagedHospitals">
+            <li class="border-b last:border-none hover:bg-teal-50 transition cursor-pointer">
+              <button class="w-full text-left px-4 py-4" @click="showDetail(hosp)">
+                <div class="flex items-center gap-4">
+                  <div class="flex-1">
+                    <div class="text-lg font-bold" x-text="hosp.name[lang]"></div>
+                    <div class="text-sm text-gray-600" x-text="hosp.specialty[lang]"></div>
+                    <div class="text-xs mt-1 flex flex-wrap gap-2">
+  <span class="bg-teal-100 text-teal-800 rounded px-2" x-text="t('Insurance')"></span>
+  <span x-show="hosp.languages.includes('English')" class="bg-gray-50 px-2 rounded" x-text="t('English Support')"></span>
+  <template x-if="isOpen(hosp)">
+    <span class="bg-green-100 text-green-800 px-2 rounded" x-text="t('Open Now')"></span>
+  </template>
+  <template x-if="!isOpen(hosp)">
+    <span class="bg-red-100 text-red-800 px-2 rounded" x-text="t('Close Now')"></span>
+  </template>
+</div>
+                  </div>
+                </div>
+              </button>
+            </li>
+          </template>
+        </ul>
+        <div x-show="filteredHospitals.length === 0" class="text-center py-8 text-gray-500" x-text="t('No results found')"></div>
+        <!-- Pagination -->
+        <div x-show="totalPages > 1" class="flex justify-center gap-2 py-4 sticky bottom-0 bg-white z-10">
+          <button :disabled="page === 1"
+            @click="goToPage(page-1)"
+            class="px-3 py-1 rounded-xl border bg-white hover:bg-teal-50"
+            :class="page===1 ? 'text-gray-400 cursor-default' : 'text-teal-800'">&lt;</button>
+          <template x-for="i in totalPages">
+            <button @click="goToPage(i)" :class="i===page ? 'bg-teal-600 text-white' : 'bg-white text-teal-800 border hover:bg-teal-50'"
+              class="px-3 py-1 rounded-xl border mx-0.5 font-semibold" x-text="i"></button>
+          </template>
+          <button :disabled="page === totalPages"
+            @click="goToPage(page+1)"
+            class="px-3 py-1 rounded-xl border bg-white hover:bg-teal-50"
+            :class="page===totalPages ? 'text-gray-400 cursor-default' : 'text-teal-800'">&gt;</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div x-show="selected" x-cloak class="fixed inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-xl mx-2 hospital-modal relative overflow-y-auto max-h-[95vh]">
+      <button @click="selected=null" class="absolute top-2 right-2 text-gray-400 hover:text-teal-600 text-xl">&times;</button>
+      <div class="p-6">
+        <div class="flex items-center gap-4 mb-4">
+          <div>
+            <div class="text-2xl font-bold mb-1" x-text="selected?.name[lang]"></div>
+            <div class="text-base text-gray-600" x-text="selected?.specialty[lang]"></div>
+          </div>
+        </div>
+        <div class="mb-2">
+          <strong x-text="t('Address')"></strong>: <span x-text="selected.address"></span>
+          <div class="mt-2">
+            <iframe :src="selected.mapEmbed" width="100%" height="160" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="mb-2">
+          <strong x-text="t('Phone')"></strong>: <a :href="'tel:'+selected.phone" class="text-teal-700" x-text="selected.phone"></a><br>
+          <template x-if="selected.email">
+            <div><strong x-text="t('Email')"></strong>: <a :href="'mailto:'+selected.email" class="text-teal-700" x-text="selected.email"></a></div>
+          </template>
+        </div>
+        <div class="mb-2">
+          <strong x-text="t('Hours')"></strong>:
+          <ul class="ml-4 list-disc text-sm">
+            <template x-for="h in selected.hours[lang]"><li x-text="h"></li></template>
+          </ul>
+        </div>
+        <div class="mb-2">
+          <strong x-text="t('Insurance Plans')"></strong>: <span x-text="selected.insurancePlans ? selected.insurancePlans[lang].join(', ') : '-'"></span>
+        </div>
+        <div class="mb-2">
+          <strong x-text="t('Services & Treatments')"></strong>:
+          <ul class="ml-4 list-disc text-sm">
+            <template x-for="s in selected.services">
+              <li x-text="s[lang]"></li>
+            </template>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="scripts.js"></script>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</body>
+</html>
