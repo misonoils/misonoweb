@@ -838,6 +838,130 @@ const HOSPITALS = [
     location: { lat: 35.4019, lng: 136.8663 },
     mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2714.2479044387337!2d136.85993367488135!3d35.40484874510852!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6003087f91fe1db3%3A0xc41956ef66eab17d!2sInazumi%20Ophthalmology%20Clinic!5e1!3m2!1sen!2sjp!4v1751957653220!5m2!1sen!2sjp"
   },
+  {
+    name: { en: "Yokoyama Ear, Nose, and Throat Clinic", ja: "横山耳鼻咽喉科" },
+    specialty: { en: "Otolaryngology", ja: "耳鼻咽喉科" },
+    address: "〒504-0962 岐阜県各務原市那加吾妻町７８",
+    phone: "058-382-0223",
+    email: "",
+    hours: {
+      ja: [
+        "月～水 8:30～12:00, 15:30～18:30",
+        "木 8:30～12:00",
+        "金 8:30～12:00, 15:30～18:30",
+        "土 8:30～13:00",
+        "日・祝 休診"
+      ],
+      en: [
+        "Mon-Wed 8:30–12:00, 15:30–18:30",
+        "Thu 8:30–12:00",
+        "Fri 8:30–12:00, 15:30–18:30",
+        "Sat 8:30-13:00",
+        "Sun/Public Holiday Closed"
+      ]
+    },
+    openHours: {
+  mon: [
+    { start: "08:30", end: "12:00" },
+    { start: "15:30", end: "18:30" }
+  ],
+  tue: [
+    { start: "08:30", end: "12:00" },
+    { start: "15:30", end: "18:30" }
+  ],
+  wed: [
+    { start: "08:30", end: "12:00" },
+    { start: "15:30", end: "18:30" }
+  ],
+  thu: [
+    { start: "08:30", end: "12:00" }
+  ],
+  fri: [
+    { start: "08:30", end: "12:00" },
+    { start: "15:30", end: "18:30" }
+  ],
+  sat: [
+    { start: "08:30", end: "13:00" }
+  ],
+  sun: [
+    // closed
+  ],
+  holiday: [
+    // closed
+  ]
+},
+    insurance: true,
+    insurancePlans: { en: ["National Health"], ja: ["国民健康保険"] },
+    services: [
+  { en: "Ear Check", ja: "耳の検査" },
+  { en: "Nose Treatment", ja: "鼻の治療" },
+  { en: "Throat Examination", ja: "のどの診察" },
+  { en: "No Appointment Needed", ja: "予約なしでOK" },
+  { en: "Home Visit OK", ja: "おうちでも見てもらえる" },
+  { en: "Free Parking", ja: "無料の駐車場あり" }
+],
+    languages: ["Japanese"],
+    location: { lat: 35.4019, lng: 136.8663 },
+    mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d86861.0036412327!2d136.6959143433594!3d35.4001425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600307e6ab8dd53d%3A0xe1edba69d2af3c5c!2z5qiq5bGx6ICz6by75ZK95ZaJ56eR!5e1!3m2!1sen!2sjp!4v1752026668585!5m2!1sen!2sjp"
+  },
+  {
+    name: { en: "Akasaka Dental Clinic", ja: "赤坂歯科" },
+    specialty: { en: "Dental", ja: "歯科" },
+    address: "〒504-0941 岐阜県各務原市三井町１丁目５６",
+    phone: "058-382-8777",
+    email: "",
+    hours: {
+      ja: [
+        "月～金 16:00～22:00",
+        "土 9:00～13:00, 14:00～17:00",
+        "日・祝 休診"
+      ],
+      en: [
+        "Mon-Fri 16:00–22:00",
+        "Sat 9:00-13:00, 14:00-17:00",
+        "Sun/Public Holiday Closed"
+      ]
+    },
+    openHours: {
+  mon: [
+    { start: "16:00", end: "22:00" }
+  ],
+  tue: [
+    { start: "16:00", end: "22:00" }
+  ],
+  wed: [
+    { start: "16:00", end: "22:00" }
+  ],
+  thu: [
+    { start: "16:00", end: "22:00" }
+  ],
+  fri: [
+    { start: "16:00", end: "22:00" }
+  ],
+  sat: [
+    { start: "09:00", end: "13:00" },
+    { start: "14:00", end: "17:00" }
+  ],
+  sun: [
+    // closed
+  ],
+  holiday: [
+    // closed
+  ]
+},
+    insurance: true,
+    insurancePlans: { en: ["National Health"], ja: ["国民健康保険"] },
+    services: [
+  { en: "Dental Checkup", ja: "歯の検診" },
+  { en: "Cavity Treatment", ja: "虫歯の治療" },
+  { en: "Teeth Cleaning", ja: "歯のクリーニング" },
+  { en: "No Appointment Needed", ja: "予約なしでOK" },
+  { en: "Kids Welcome", ja: "お子様もOK" }
+],
+    languages: ["Japanese"],
+    location: { lat: 35.4019, lng: 136.8663 },
+    mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2714.589600610883!2d136.8299205753677!3d35.394699685301134!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600307fd2fd556a9%3A0x933eefbd57c3ef8d!2z6LWk5Z2C5q2v56eR!5e1!3m2!1sen!2sjp!4v1752027286800!5m2!1sen!2sjp"
+  },
 ];
 
 const HOSPITALS_PER_PAGE = 6;
