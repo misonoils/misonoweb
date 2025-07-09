@@ -963,6 +963,10 @@ function hospitalApp() {
       this.page = 1;
       this.applyFilters();
     },
+    findNearby() {
+  const url = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2282.5741237084176!2d136.8537136112696!3d35.39874576261064!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600308796e819cfb%3A0xfea3e1169d30680a!2sSarasara%20Clinic!5e1!3m2!1sen!2sjp!4v1751874525737!5m2!1sen!2sjp";
+  document.getElementById('main-map').src = url;
+},
     isOpen(hosp) {
   if (!hosp.openHours) return true; // fallback: always open
 
@@ -1050,7 +1054,9 @@ this.filteredHospitals = arr;
       this.selected = hosp;
     },
     findNearby() {
-      alert(this.t('Feature coming soon!') + '\n機能は近日公開予定です!');
-    }
+  // This will set the map iframe to Sarasara Clinic
+  const url = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2282.5741237084176!2d136.8537136112696!3d35.39874576261064!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600308796e819cfb%3A0xfea3e1169d30680a!2sSarasara%20Clinic!5e1!3m2!1sen!2sjp!4v1751874525737!5m2!1sen!2sjp";
+  document.getElementById('main-map').src = url;
+}
   }
 }
